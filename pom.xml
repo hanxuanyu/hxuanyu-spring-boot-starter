@@ -166,6 +166,7 @@
                         <configuration>
                             <tagNameFormat>release-by-maven-${project.version}</tagNameFormat>
                             <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <password>${git.password}</password>
                         </configuration>
                     </plugin>
                 </plugins>
