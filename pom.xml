@@ -18,8 +18,8 @@
     </licenses>
     <url>https://github.com/hanxuanyu/hxuanyu-springboot-starter/</url>
     <scm>
-        <connection>scm:git:git@git.hxuanyu.com:hxuanyu/hxuanyu-spring-boot-starter.git</connection>
-        <developerConnection>scm:git:git@git.hxuanyu.com:hxuanyu/hxuanyu-spring-boot-starter.git</developerConnection>
+        <connection>scm:git:https://git.hxuanyu.com/hxuanyu/hxuanyu-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:https://git.hxuanyu.com/hxuanyu/hxuanyu-spring-boot-starter.git</developerConnection>
         <url>https://git.hxuanyu.com/hxuanyu/hxuanyu-spring-boot-starter</url>
         <tag>v-release-0.0.1</tag>
     </scm>
@@ -167,6 +167,7 @@
                             <tagNameFormat>release-by-maven-${project.version}</tagNameFormat>
                             <autoVersionSubmodules>true</autoVersionSubmodules>
                             <password>${git.password}</password>
+                            <username>hxuanyu</username>
                         </configuration>
                     </plugin>
                 </plugins>
