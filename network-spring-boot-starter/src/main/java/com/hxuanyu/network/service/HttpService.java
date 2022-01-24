@@ -277,18 +277,16 @@ public interface HttpService {
      *
      * @param url 请求地址
      * @return 统一返回报文
-     * @throws Exception 异常
      */
-    Msg<String> doDelete(String url) throws Exception;
+    Msg<String> doDelete(String url);
 
     /**
      * 发送delete请求；不带请求参数
      *
      * @param url 请求地址
      * @return 统一返回报文
-     * @throws Exception 异常
      */
-    Msg<HttpEntity> doDeleteWithEntity(String url) throws Exception;
+    Msg<HttpEntity> doDeleteWithEntity(String url);
 
     /**
      * 发送delete请求；带请求参数
@@ -296,9 +294,8 @@ public interface HttpService {
      * @param url    请求地址
      * @param params 请求参数
      * @return 统一返回报文
-     * @throws Exception 异常
      */
-    Msg<String> doDelete(String url, Map<String, String> params) throws Exception;
+    Msg<String> doDelete(String url, Map<String, String> params);
 
 
     /**
@@ -307,9 +304,8 @@ public interface HttpService {
      * @param url    请求地址
      * @param params 请求参数
      * @return 统一返回报文
-     * @throws Exception 异常
      */
-    Msg<HttpEntity> doDeleteWithEntity(String url, Map<String, String> params) throws Exception;
+    Msg<HttpEntity> doDeleteWithEntity(String url, Map<String, String> params);
 
     interface NetWorkListener<T> {
         /**

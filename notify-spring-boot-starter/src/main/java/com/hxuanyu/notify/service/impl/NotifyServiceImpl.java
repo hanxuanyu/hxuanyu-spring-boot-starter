@@ -6,7 +6,6 @@ import com.hxuanyu.notify.service.MailService;
 import com.hxuanyu.notify.service.NotifyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,10 +25,12 @@ public class NotifyServiceImpl implements NotifyService {
 
     @Override
     public void notify(Object content, NotifyType notifyType) {
-        if (NotifyType.MAIL_TYPE.equals(notifyType)) {
+        if (NotifyType.TYPE_MAIL.equals(notifyType)) {
             sendMail(content);
-        } else if (NotifyType.SMS_TYPE.equals(notifyType)) {
+        } else if (NotifyType.TYPE_MSG.equals(notifyType)) {
             sendSms(content);
+        } else if (NotifyType.TYPE_LOG.equals(notifyType)) {
+            logger.info("新通知：{}", content);
         } else {
             logger.info("未匹配到通知类型：[{}]", content);
         }

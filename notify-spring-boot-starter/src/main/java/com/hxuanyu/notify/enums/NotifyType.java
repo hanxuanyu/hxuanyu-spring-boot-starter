@@ -12,8 +12,9 @@ public enum NotifyType {
     /**
      * 邮件类型
      */
-    MAIL_TYPE("邮件"),
-    SMS_TYPE("短信");
+    TYPE_LOG("日志输出"),
+    TYPE_MAIL("邮件"),
+    TYPE_MSG("短信");
 
     private final String typeName;
 

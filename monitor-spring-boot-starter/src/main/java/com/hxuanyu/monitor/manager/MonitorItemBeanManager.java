@@ -91,7 +91,7 @@ public class MonitorItemBeanManager implements ApplicationListener<ContextRefres
             CheckResult checkResult = item.check();
             if (checkResult.isTriggered()) {
                 logger.info("定时任务[{}]触发成功，发送通知：[{}]", taskId, checkResult.getNotifyContent());
-                notifyService.notify(checkResult.getNotifyContent(), NotifyType.MAIL_TYPE);
+                notifyService.notify(checkResult.getNotifyContent(), NotifyType.TYPE_MAIL);
             }
         }, new CronTrigger(cron)));
     }
