@@ -165,7 +165,7 @@
                             <tagNameFormat>v@{project.version}</tagNameFormat>
                             <autoVersionSubmodules>true</autoVersionSubmodules>
                             <password>${git.password}</password>
-                            <username>hxuanyu</username>
+                            <username>${git.username}</username>
                         </configuration>
                     </plugin>
                 </plugins>
