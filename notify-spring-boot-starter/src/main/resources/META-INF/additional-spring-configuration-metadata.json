@@ -1,0 +1,43 @@
+{
+  "properties": [
+    {
+      "name": "notify.mail.host",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.host."
+    },
+    {
+      "name": "notify.mail.protocol",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.protocol."
+    },
+    {
+      "name": "notify.mail.default-encoding",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.default-encoding."
+    },
+    {
+      "name": "notify.mail.password",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.password."
+    },
+    {
+      "name": "notify.mail.username",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.username."
+    },
+    {
+      "name": "notify.mail.port",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.port."
+    },
+    {
+      "name": "notify.mail.properties.mail.debug",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.properties.mail.debug."
+    },
+    {
+      "name": "notify.mail.properties.stmp.socketFactory.class",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.properties.stmp.socketFactory.class."
+    }
+  ] }

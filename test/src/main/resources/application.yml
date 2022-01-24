@@ -1,10 +1,10 @@
-spring:
+notify:
   mail:
-    host: smtp.domain
+    host: smtp.qq.com
     protocol: smtp
     default-encoding: UTF-8
-    password: your_password
-    username: your_username
+    password: bjmtskwfjrvqdhgb
+    username: 2202043370@qq.com
     port: 587
     properties:
       mail:

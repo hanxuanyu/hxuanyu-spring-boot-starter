@@ -2,18 +2,19 @@ package com.hxuanyu.notify.service.impl;
 
 
 import com.hxuanyu.notify.common.MailQueue;
+import com.hxuanyu.notify.config.MailProperties;
 import com.hxuanyu.notify.model.Mail;
 import com.hxuanyu.notify.service.MailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,15 +28,14 @@ import java.util.concurrent.ExecutorService;
  */
 @Service
 public class MailServiceImpl implements MailService {
+    @Resource
+    MailProperties mailProperties;
     private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
     private static boolean isRunning = true;
     ExecutorService executor;
 
-    private static JavaMailSender javaMailSender;
-    private static TemplateEngine templateEngine;
+    private JavaMailSender javaMailSender;
 
-
-    private static String defaultFrom;
 
 
 
@@ -45,7 +45,7 @@ public class MailServiceImpl implements MailService {
         executor.submit(new PollMail());
     }
 
-    static class PollMail implements Runnable {
+    class PollMail implements Runnable {
         @Override
         public void run() {
             while (isRunning) {
@@ -71,10 +71,10 @@ public class MailServiceImpl implements MailService {
     }
 
 
-    private static void sendMailSync(Mail mail) {
+    private void sendMailSync(Mail mail) {
         String from = mail.getFrom();
         if (from == null) {
-            from = defaultFrom;
+            from = mailProperties.getUsername();
             logger.info("未传入发件人，从配置中读取：{}", from);
         }
         MimeMessage mimeMessage;
@@ -87,12 +87,7 @@ public class MailServiceImpl implements MailService {
             mimeMessageHelper.setFrom(from);
             mimeMessageHelper.setTo(mail.getTo());
             mimeMessageHelper.setSubject(mail.getSubject());
-            // 利用 Thymeleaf 引擎渲染 HTML
-            Context context = new Context();
-            // 设置注入的变量
-            context.setVariable("templates/mail", mail);
-            // 模板设置为 "mail"
-            String content = templateEngine.process("templates/mail/mail", context);
+            String content = mail.getContent();
             // 设置邮件内容
             // true 表示开启 html
             mimeMessageHelper.setText(content, true);
@@ -112,9 +107,9 @@ public class MailServiceImpl implements MailService {
     }
 
 
-    @Resource
+    @Autowired
     public void setJavaMailSender(JavaMailSender javaMailSender) {
-        MailServiceImpl.javaMailSender = javaMailSender;
+        this.javaMailSender = javaMailSender;
     }
 
     @Autowired
@@ -122,14 +117,4 @@ public class MailServiceImpl implements MailService {
         this.executor = executor;
     }
 
-
-    @Autowired
-    public void setTemplateEngine(TemplateEngine templateEngine) {
-        MailServiceImpl.templateEngine = templateEngine;
-    }
-
-    @Value("${spring.mail.username}")
-    public void setDefaultFrom(String defaultFrom) {
-        MailServiceImpl.defaultFrom = defaultFrom;
-    }
 }
