@@ -33,7 +33,7 @@ public class MailServiceImpl implements MailService {
     private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
     private static boolean isRunning = true;
     ExecutorService executor;
-
+    @Resource
     private JavaMailSender javaMailSender;
 
 
@@ -55,7 +55,7 @@ public class MailServiceImpl implements MailService {
                     if (mail != null) {
                         //可以设置延时 以及重复校验等等操作
                         sendMailSync(mail);
-                        Thread.sleep(10000);
+                        Thread.sleep(mailProperties.getInterval());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -72,6 +72,10 @@ public class MailServiceImpl implements MailService {
 
 
     private void sendMailSync(Mail mail) {
+        if (mailProperties == null){
+            logger.error("未配置邮件信息，请在配置文件中添加配置信息后再发送邮件");
+            return;
+        }
         String from = mail.getFrom();
         if (from == null) {
             from = mailProperties.getUsername();
@@ -106,11 +110,6 @@ public class MailServiceImpl implements MailService {
         logger.info("destroy");
     }
 
-
-    @Autowired
-    public void setJavaMailSender(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
 
     @Autowired
     public void setExecutor(@Qualifier("mailExecutorService") ExecutorService executor) {

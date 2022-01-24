@@ -36,6 +36,11 @@
       "description": "Description for notify.mail.properties.mail.debug."
     },
     {
+      "name": "notify.mail.properties.mail.interval",
+      "type": "java.lang.String",
+      "description": "Description for notify.mail.properties.mail.debug."
+    },
+    {
       "name": "notify.mail.properties.stmp.socketFactory.class",
       "type": "java.lang.String",
       "description": "Description for notify.mail.properties.stmp.socketFactory.class."

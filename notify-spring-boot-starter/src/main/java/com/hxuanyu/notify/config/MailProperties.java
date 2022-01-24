@@ -4,12 +4,15 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author hxuanyu
  */
 @ConfigurationProperties(prefix = "notify.mail")
+@ConditionalOnProperty(prefix = "notify.mail", havingValue = "true")
 public class MailProperties {
     private static final Charset DEFAULT_CHARSET;
     private String host;
@@ -20,10 +23,23 @@ public class MailProperties {
     private Charset defaultEncoding;
     private Map<String, String> properties;
     private String jndiName;
+    private Integer interval = 10000;
 
     public MailProperties() {
         this.defaultEncoding = DEFAULT_CHARSET;
         this.properties = new HashMap();
+    }
+
+    public void setProperties(Map<String, String> properties) {
+        this.properties = properties;
+    }
+
+    public Integer getInterval() {
+        return interval;
+    }
+
+    public void setInterval(Integer interval) {
+        this.interval = interval;
     }
 
     public String getHost() {

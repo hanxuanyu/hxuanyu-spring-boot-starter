@@ -3,8 +3,8 @@ notify:
     host: smtp.qq.com
     protocol: smtp
     default-encoding: UTF-8
-    password: bjmtskwfjrvqdhgb
-    username: 2202043370@qq.com
+    password: your pwd
+    username: your account
     port: 587
     properties:
       mail:
@@ -12,3 +12,4 @@ notify:
       stmp:
         socketFactory:
           class: javax.net.ssl.SSLSocketFactory
+    interval: 5000
