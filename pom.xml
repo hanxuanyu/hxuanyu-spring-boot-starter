@@ -34,6 +34,7 @@
         <module>network-spring-boot-starter</module>
         <module>notify-spring-boot-starter</module>
         <module>monitor-spring-boot-starter</module>
+        <module>test</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
