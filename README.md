@@ -15,50 +15,20 @@
 
 ## 快速开始
 
-### 1. 引入maven依赖
-
-本项目已经上传到中央仓库，使用时在pom文件中添加如下依赖即可：
-
-- network-spring-boot-starter
+### 引入maven依赖
 
 ```xml
-<!--network-spring-boot-starter-->
 <dependency>
     <groupId>com.hxuanyu</groupId>
-    <artifactId>network-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
+    <artifactId>hxuanyu-spring-boot-starter-parent</artifactId>
+    <version>1.0.4</version>
 </dependency>
 ```
 
-- notify-spring-boot-starter
+**子模块的依赖详见子模块的Readme**：
 
-```xml
-<!--notify-spring-boot-starter-->
-<dependency>
-    <groupId>com.hxuanyu</groupId>
-    <artifactId>notify-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
-</dependency>
-```
+- [common-spring-boot-starter](https://git.hxuanyu.com/hxuanyu/hxuanyu-spring-boot-starter/src/branch/master/common-spring-boot-starter)
+- [monitor-spring-boot-starter](https://git.hxuanyu.com/hxuanyu/hxuanyu-spring-boot-starter/src/branch/master/monitor-spring-boot-starter/README.md)
+- [network-spring-boot-starter](https://git.hxuanyu.com/hxuanyu/hxuanyu-spring-boot-starter/src/branch/master/network-spring-boot-starter)
+- [notify-spring-boot-starter](https://git.hxuanyu.com/hxuanyu/hxuanyu-spring-boot-starter/src/branch/master/notify-spring-boot-starter)
 
-- monitor-spring-boot-starter
-
-```xml
-<!--monitor-spring-boot-starter-->
-<dependency>
-    <groupId>com.hxuanyu</groupId>
-    <artifactId>monitor-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
-</dependency>
-```
-
-- monitor-spring-boot-starter
-
-```xml
-<!--monitor-spring-boot-starter-->
-<dependency>
-    <groupId>com.hxuanyu</groupId>
-    <artifactId>monitor-spring-boot-starter</artifactId>
-    <version>1.0.1</version>
-</dependency>
-```
