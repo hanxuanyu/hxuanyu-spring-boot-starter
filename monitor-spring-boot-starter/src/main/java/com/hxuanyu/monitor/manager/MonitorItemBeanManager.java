@@ -1,5 +1,6 @@
 package com.hxuanyu.monitor.manager;
 
+import com.hxuanyu.common.message.Msg;
 import com.hxuanyu.monitor.annotation.MonitorItem;
 import com.hxuanyu.monitor.base.BaseMonitorItem;
 import com.hxuanyu.monitor.common.CheckResult;
@@ -58,31 +59,47 @@ public class MonitorItemBeanManager implements ApplicationListener<ContextRefres
                         item.setMonitorItemName(name);
                         item.setCron(cron);
                         logger.info("获取到的Bean：{}", item);
-                        addMonitorTask(item);
+                        Msg<String> msg = addMonitorTask(item);
+                        logger.info("添加成功：{}", msg);
                     }
                 }
             }
         }
     }
 
-    public void addMonitorTask(BaseMonitorItem item) {
+    public Msg<String> addMonitorTask(BaseMonitorItem item) {
         String taskId = "ScheduledTask-" + item.getMonitorItemName();
+        if (MONITOR_ITEM_MAP.containsKey(taskId)) {
+            return Msg.failed("任务已经存在，请执行修改操作");
+        }
         MONITOR_ITEM_MAP.put(taskId, item);
         logger.info("添加定时任务：{}, 执行周期：{}", taskId, item.getCron());
         addTask(taskId, item);
+        return Msg.success("添加成功");
     }
 
-    public void setMonitorTaskCron(String taskId, String cron) {
+    public Msg<String> setMonitorTaskCron(String taskId, String cron) {
         if (MONITOR_ITEM_MAP.containsKey(taskId)) {
+            schedulingConfigurer.cancelTriggerTask(taskId);
             BaseMonitorItem item = MONITOR_ITEM_MAP.get(taskId);
             item.setCron(cron);
             addTask(taskId, item);
+            logger.info("修改定时任务：{}, 执行周期：{}", taskId, item.getCron());
+            return Msg.success("修改成功");
+        } else {
+            return Msg.failed("修改失败，该任务不存在");
         }
     }
 
-    public void deleteMonitorTask(String taskId) {
-        MONITOR_ITEM_MAP.remove(taskId);
-        schedulingConfigurer.cancelTriggerTask(taskId);
+    public Msg<String> deleteMonitorTask(String taskId) {
+        if (MONITOR_ITEM_MAP.containsKey(taskId)) {
+            MONITOR_ITEM_MAP.remove(taskId);
+            schedulingConfigurer.cancelTriggerTask(taskId);
+            logger.info("删除定时任务：{}", taskId);
+            return Msg.success("删除任务成功");
+        } else {
+            return Msg.failed("任务不存在");
+        }
     }
 
     private void addTask(String taskId, BaseMonitorItem item) {
@@ -90,8 +107,13 @@ public class MonitorItemBeanManager implements ApplicationListener<ContextRefres
         schedulingConfigurer.resetTriggerTask(taskId, new TriggerTask(() -> {
             CheckResult checkResult = item.check();
             if (checkResult.isTriggered()) {
-                logger.info("定时任务[{}]触发成功，发送通知：[{}]", taskId, checkResult.getNotifyContent());
-                notifyService.notify(checkResult.getNotifyContent(), NotifyType.TYPE_MAIL);
+                if (NotifyType.TYPE_CUSTOM.equals(checkResult.getNotifyType())){
+                    logger.info("定时任务[{}]触发成功，执行自定义通知", taskId);
+                    notifyService.notify(checkResult.getCustomNotify());
+                } else {
+                    logger.info("定时任务[{}]触发成功，发送通知：[{}]", taskId, checkResult.getNotifyContent());
+                    notifyService.notify(checkResult.getNotifyContent(), checkResult.getNotifyType());
+                }
             }
         }, new CronTrigger(cron)));
     }

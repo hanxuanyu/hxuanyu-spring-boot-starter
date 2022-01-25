@@ -22,6 +22,10 @@ public class NotifyTest {
         sleep(2000);
         notifyService.notify("短信通知方式", NotifyType.TYPE_MSG);
         notifyService.notify("日志输出方式", NotifyType.TYPE_LOG);
+        notifyService.notify(() -> {
+            // do some things
+
+        });
     }
 
 }

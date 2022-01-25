@@ -1,12 +1,11 @@
 package com.hxuanyu.test.controller;
 
 import com.hxuanyu.common.message.Msg;
+import com.hxuanyu.monitor.manager.MonitorItemBeanManager;
 import com.hxuanyu.notify.model.Mail;
 import com.hxuanyu.notify.service.MailService;
-import com.hxuanyu.notify.service.NotifyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,28 +18,9 @@ import javax.annotation.Resource;
  */
 
 @RestController
-public class TestController {
+public class NetworkTestController {
 
-    private final Logger logger = LoggerFactory.getLogger(TestController.class);
-    @Resource
-    MailService mailService;
-
-    @RequestMapping("/testMail")
-    public Msg<Mail> testMail() {
-        Mail mail = new Mail();
-        mail.setContent("邮件内容");
-        mail.setSubject("邮件主题");
-        mail.setTo("2252193204@qq.com");
-
-        try {
-            mailService.sendMail(mail);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return Msg.success("发送邮件成功", mail);
-    }
-
+    private final Logger logger = LoggerFactory.getLogger(NetworkTestController.class);
 
     @ResponseBody
     @GetMapping("/")
