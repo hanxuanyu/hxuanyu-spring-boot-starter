@@ -1,6 +1,6 @@
 package com.hxuanyu.monitor.config;
 
-import com.hxuanyu.monitor.utils.BeanUtils;
+import com.hxuanyu.common.util.BeanUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.SchedulingException;
 import org.springframework.scheduling.TaskScheduler;

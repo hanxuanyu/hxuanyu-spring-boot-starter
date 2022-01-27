@@ -1,4 +1,4 @@
-package com.hxuanyu.monitor.utils;
+package com.hxuanyu.common.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -12,6 +12,8 @@ import java.util.*;
  * @version 1.0
  */
 public class BeanUtils {
+
+
     public static Field findField(Class<?> clazz, String name) {
         try {
             return clazz.getField(name);
