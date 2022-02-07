@@ -108,7 +108,6 @@ public class HttpServiceImpl implements HttpService {
     public Msg<HttpEntity> doGetWithEntity(String url, Map<String, String> headers, Map<String, String> params) {
         // 创建httpClient对象
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-
             // 创建访问的地址
             URIBuilder uriBuilder = new URIBuilder(url);
             if (params != null) {
@@ -134,14 +133,8 @@ public class HttpServiceImpl implements HttpService {
 
             // 创建httpResponse对象
             CloseableHttpResponse httpResponse = null;
-
-            try {
-                // 执行请求并获得响应结果
-                return getHttpClientResult(httpClient, httpGet);
-            } finally {
-                // 释放资源
-                release(httpClient);
-            }
+            // 执行请求并获得响应结果
+            return getHttpClientResult(httpClient, httpGet);
         } catch (Exception e) {
             logger.error("请求过程出现异常: {}", e.getMessage());
             return Msg.failed("网络请求发生异常：" + e.getMessage());
@@ -248,12 +241,12 @@ public class HttpServiceImpl implements HttpService {
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
         httpPost.setConfig(requestConfig);
         // 设置请求头
-        httpPost.setHeader("Cookie", "");
-        httpPost.setHeader("Connection", "keep-alive");
-        httpPost.setHeader("Accept", "application/json");
-        httpPost.setHeader("Accept-Language", "zh-CN,zh;q=0.9");
-        httpPost.setHeader("Accept-Encoding", "gzip, deflate, br");
-        httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36");
+//        httpPost.setHeader("Cookie", "");
+//        httpPost.setHeader("Connection", "keep-alive");
+//        httpPost.setHeader("Accept", "application/json");
+//        httpPost.setHeader("Accept-Language", "zh-CN,zh;q=0.9");
+//        httpPost.setHeader("Accept-Encoding", "gzip, deflate, br");
+//        httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36");
         packageHeader(headers, httpPost);
 
         // 封装请求参数
@@ -265,13 +258,6 @@ public class HttpServiceImpl implements HttpService {
             e.printStackTrace();
             logger.error("请求过程出现异常: {}", e.getMessage());
             return Msg.failed("请求过程出现异常: " + e.getMessage());
-        } finally {
-            // 释放资源
-            try {
-                release(httpClient);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -342,12 +328,6 @@ public class HttpServiceImpl implements HttpService {
             e.printStackTrace();
             logger.error("请求过程出现异常: {}", e.getMessage());
             return Msg.failed("网络请求时发生异常: " + e.getMessage());
-        } finally {
-            try {
-                release(httpClient);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -386,12 +366,6 @@ public class HttpServiceImpl implements HttpService {
         } catch (Exception e) {
             e.printStackTrace();
             return Msg.failed("转换String时发生IO异常");
-        } finally {
-            try {
-                release(httpClient);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
