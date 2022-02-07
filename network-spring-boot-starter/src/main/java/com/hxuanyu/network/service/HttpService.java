@@ -1,7 +1,7 @@
 package com.hxuanyu.network.service;
 
 import com.hxuanyu.common.message.Msg;
-import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public interface HttpService {
      * @param url 请求地址
      * @return 统一结果报文
      */
-    Msg<HttpEntity> doGetWithEntity(String url);
+    Msg<HttpResponse> doGetWithResponse(String url);
 
 
 
@@ -47,7 +47,7 @@ public interface HttpService {
      * @param url      请求地址
      * @param listener 异步请求结果监听
      */
-    void doGetSyncWithEntity(String url, NetWorkListener<HttpEntity> listener);
+    void doGetSyncWithResponse(String url, NetWorkListener<HttpResponse> listener);
 
     /**
      * 发送get请求；带请求参数
@@ -66,7 +66,7 @@ public interface HttpService {
      * @param params 请求参数集合
      * @return 全局报文
      */
-    Msg<HttpEntity> doGetWithEntity(String url, Map<String, String> params);
+    Msg<HttpResponse> doGetWithResponse(String url, Map<String, String> params);
 
     /**
      * 异步Get请求
@@ -84,7 +84,7 @@ public interface HttpService {
      * @param params   请求参数
      * @param listener 异步请求结果监听
      */
-    void doGetSyncWithEntity(String url, Map<String, String> params, NetWorkListener<HttpEntity> listener);
+    void doGetSyncWithResponse(String url, Map<String, String> params, NetWorkListener<HttpResponse> listener);
 
     /**
      * 发送get请求；带请求头和请求参数
@@ -104,7 +104,7 @@ public interface HttpService {
      * @param params  请求参数集合
      * @return 全局报文
      */
-    Msg<HttpEntity> doGetWithEntity(String url, Map<String, String> headers, Map<String, String> params);
+    Msg<HttpResponse> doGetWithResponse(String url, Map<String, String> headers, Map<String, String> params);
 
     /**
      * 异步Get请求
@@ -124,7 +124,7 @@ public interface HttpService {
      * @param params   请求体
      * @param listener 异步结果监听器
      */
-    void doGetSyncWithEntity(String url, Map<String, String> headers, Map<String, String> params, NetWorkListener<HttpEntity> listener);
+    void doGetSyncWithResponse(String url, Map<String, String> headers, Map<String, String> params, NetWorkListener<HttpResponse> listener);
 
     /**
      * 发送post请求；不带请求头和请求参数
@@ -140,7 +140,7 @@ public interface HttpService {
      * @param url 请求地址
      * @return 统一报文
      */
-    Msg<HttpEntity> doPostWithEntity(String url);
+    Msg<HttpResponse> doPostWithResponse(String url);
 
 
     /**
@@ -157,7 +157,7 @@ public interface HttpService {
      * @param url      请求地址
      * @param listener 请求参数
      */
-    void doPostSyncWithEntity(String url, NetWorkListener<HttpEntity> listener);
+    void doPostSyncWithResponse(String url, NetWorkListener<HttpResponse> listener);
 
     /**
      * 同步Post请求
@@ -176,7 +176,7 @@ public interface HttpService {
      * @param params 请求参数
      * @return 统一消息体
      */
-    Msg<HttpEntity> doPostWithEntity(String url, Map<String, String> params);
+    Msg<HttpResponse> doPostWithResponse(String url, Map<String, String> params);
 
     /**
      * 异步Post请求
@@ -194,7 +194,7 @@ public interface HttpService {
      * @param params   请求参数
      * @param listener 异步请求结果监听
      */
-    void doPostSyncWithEntity(String url, Map<String, String> params, NetWorkListener<HttpEntity> listener);
+    void doPostSyncWithResponse(String url, Map<String, String> params, NetWorkListener<HttpResponse> listener);
 
     /**
      * 发送post请求；带请求头和请求参数
@@ -214,7 +214,7 @@ public interface HttpService {
      * @param params  请求参数集合
      * @return 统一返回报文
      */
-    Msg<HttpEntity> doPostWithEntity(String url, Map<String, String> headers, Map<String, String> params);
+    Msg<HttpResponse> doPostWithResponse(String url, Map<String, String> headers, Map<String, String> params);
 
 
     /**
@@ -235,7 +235,7 @@ public interface HttpService {
      * @param params   请求参数
      * @param listener 异步请求结果监听
      */
-    void doPostSyncWithEntity(String url, Map<String, String> headers, Map<String, String> params, NetWorkListener<HttpEntity> listener);
+    void doPostSyncWithResponse(String url, Map<String, String> headers, Map<String, String> params, NetWorkListener<HttpResponse> listener);
 
     /**
      * 发送put请求；不带请求参数
@@ -252,7 +252,7 @@ public interface HttpService {
      * @param url 请求地址
      * @return 统一消息返回报文
      */
-    Msg<HttpEntity> doPutWithEntity(String url);
+    Msg<HttpResponse> doPutWithResponse(String url);
 
     /**
      * 发送put请求；带请求参数
@@ -270,7 +270,7 @@ public interface HttpService {
      * @param params 请求参数
      * @return 统一消息报文
      */
-    Msg<HttpEntity> doPutWithEntity(String url, Map<String, String> params);
+    Msg<HttpResponse> doPutWithResponse(String url, Map<String, String> params);
 
     /**
      * 发送delete请求；不带请求参数
@@ -286,7 +286,7 @@ public interface HttpService {
      * @param url 请求地址
      * @return 统一返回报文
      */
-    Msg<HttpEntity> doDeleteWithEntity(String url);
+    Msg<HttpResponse> doDeleteWithResponse(String url);
 
     /**
      * 发送delete请求；带请求参数
@@ -305,7 +305,7 @@ public interface HttpService {
      * @param params 请求参数
      * @return 统一返回报文
      */
-    Msg<HttpEntity> doDeleteWithEntity(String url, Map<String, String> params);
+    Msg<HttpResponse> doDeleteWithResponse(String url, Map<String, String> params);
 
     interface NetWorkListener<T> {
         /**
