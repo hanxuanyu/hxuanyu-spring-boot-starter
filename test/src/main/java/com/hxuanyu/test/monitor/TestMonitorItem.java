@@ -14,14 +14,21 @@ import org.slf4j.LoggerFactory;
  *
  * @author hxuanyu
  */
-@MonitorItem(cron = "0/20 * * * * *")
 public class TestMonitorItem extends BaseMonitorItem {
 
     private final Logger logger = LoggerFactory.getLogger(TestMonitorItem.class);
 
+    public TestMonitorItem(String monitorItemName, String cron) {
+        super(monitorItemName, cron);
+    }
+
+    public TestMonitorItem(String cron) {
+        super(cron);
+    }
+
+
     @Override
     public CheckResult check() {
-
         double random = Math.random();
         int result = (int) (random * NotifyType.values().length);
         logger.info("随机索引值：{}", result);

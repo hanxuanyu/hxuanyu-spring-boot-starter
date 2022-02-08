@@ -1,6 +1,7 @@
 package com.hxuanyu.monitor.manager;
 
 import com.hxuanyu.common.message.Msg;
+import com.hxuanyu.common.spring.SpringContextUtil;
 import com.hxuanyu.monitor.annotation.MonitorItem;
 import com.hxuanyu.monitor.base.BaseMonitorItem;
 import com.hxuanyu.monitor.common.CheckResult;
@@ -78,6 +79,15 @@ public class MonitorItemBeanManager implements ApplicationListener<ContextRefres
         return Msg.success("添加成功");
     }
 
+    public Msg<String> addMonitorTask(String itemName, Class<? extends BaseMonitorItem> clazz, Object... args) {
+        BaseMonitorItem item = SpringContextUtil.registerBean(itemName, clazz, args);
+        return addMonitorTask(item);
+    }
+
+    public Msg<String> addMonitorTask(Class<? extends BaseMonitorItem> clazz, Object... args) {
+        return addMonitorTask(clazz.getSimpleName(), clazz, args);
+    }
+
     public Msg<String> setMonitorTaskCron(String taskId, String cron) {
         if (MONITOR_ITEM_MAP.containsKey(taskId)) {
             schedulingConfigurer.cancelTriggerTask(taskId);
@@ -107,7 +117,7 @@ public class MonitorItemBeanManager implements ApplicationListener<ContextRefres
         schedulingConfigurer.resetTriggerTask(taskId, new TriggerTask(() -> {
             CheckResult checkResult = item.check();
             if (checkResult.isTriggered()) {
-                if (NotifyType.TYPE_CUSTOM.equals(checkResult.getNotifyType())){
+                if (NotifyType.TYPE_CUSTOM.equals(checkResult.getNotifyType())) {
                     logger.info("定时任务[{}]触发成功，执行自定义通知", taskId);
                     notifyService.notify(checkResult.getCustomNotify());
                 } else {

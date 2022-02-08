@@ -2,9 +2,10 @@ package com.hxuanyu.test.controller;
 
 import com.hxuanyu.common.message.Msg;
 import com.hxuanyu.monitor.base.BaseMonitorItem;
-import com.hxuanyu.monitor.common.CheckResult;
 import com.hxuanyu.monitor.manager.MonitorItemBeanManager;
-import com.hxuanyu.notify.enums.NotifyType;
+import com.hxuanyu.test.monitor.TestMonitorItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ import java.util.Map;
 @RequestMapping("/monitor")
 @RestController
 public class MonitorTestController {
+    private final Logger logger = LoggerFactory.getLogger(MonitorTestController.class);
 
     @Resource
     MonitorItemBeanManager monitorItemBeanManager;
@@ -49,12 +51,7 @@ public class MonitorTestController {
 
     @PostMapping("/")
     public Msg<String> addTaskList() {
-        return monitorItemBeanManager.addMonitorTask(new BaseMonitorItem("CustomBean", "0/10 * * * * *") {
-            @Override
-            public CheckResult check() {
-                return CheckResult.triggered("动态新增通知", NotifyType.TYPE_LOG);
-            }
-        });
+        return monitorItemBeanManager.addMonitorTask(TestMonitorItem.class, "0/5 * * * * *");
     }
 
 

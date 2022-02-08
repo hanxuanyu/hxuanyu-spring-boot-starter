@@ -10,14 +10,20 @@ import com.hxuanyu.monitor.common.CheckResult;
  * @version 1.0
  */
 public abstract class BaseMonitorItem {
-    private String monitorItemName;
-    private String cron;
+    protected String monitorItemName;
+    protected String cron;
 
     public BaseMonitorItem() {
+
     }
 
     public BaseMonitorItem(String monitorItemName, String cron) {
         this.monitorItemName = monitorItemName;
+        this.cron = cron;
+    }
+
+    public BaseMonitorItem(String cron) {
+        this.monitorItemName = getClass().getSimpleName();
         this.cron = cron;
     }
 
