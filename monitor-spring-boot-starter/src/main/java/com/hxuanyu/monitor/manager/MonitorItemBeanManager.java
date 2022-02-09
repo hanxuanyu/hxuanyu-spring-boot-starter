@@ -69,7 +69,7 @@ public class MonitorItemBeanManager implements ApplicationListener<ContextRefres
     }
 
     public Msg<String> addMonitorTask(BaseMonitorItem item) {
-        String taskId = "ScheduledTask-" + item.getMonitorItemName();
+        String taskId = item.getMonitorItemName();
         if (MONITOR_ITEM_MAP.containsKey(taskId)) {
             return Msg.failed("任务已经存在，请执行修改操作");
         }
@@ -94,7 +94,7 @@ public class MonitorItemBeanManager implements ApplicationListener<ContextRefres
             BaseMonitorItem item = MONITOR_ITEM_MAP.get(taskId);
             item.setCron(cron);
             addTask(taskId, item);
-            logger.info("修改定时任务：{}, 执行周期：{}", taskId, item.getCron());
+            logger.info("修改定时任务：{}, 执行周期：{}", taskId,item.getCron());
             return Msg.success("修改成功");
         } else {
             return Msg.failed("修改失败，该任务不存在");
